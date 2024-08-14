@@ -36,7 +36,7 @@ A full introduction write-up of this project, including more information on how 
 The clusters, helm chart and most tools are provisioned using _Terraform_. _Go_, _Kubectl_ and _yq_ are also required. You must use a **Unix** machine OR activate WSL to run the main CLI tool. We also recommend installing and using _helm_ for troubleshooting and debugging purposes.
 
 ### Configuration
-You will need to create a .tfvars for each vendor. Follow the details under [docs/configuration.md](https://github.com/orcasecurity/kte/blob/master/docs/configuration.md). 
+You will need to create a .tfvars for each vendor. Follow the details under [docs/configuration.md](https://github.com/orcasecurity/kte/blob/main/docs/configuration.md). 
 ```sh
 git clone https://github.com/orcasecurity/kte.git
 cd kte
@@ -52,7 +52,7 @@ Everything you can do is managed by the main CLI tool. Follow its help manual fo
 ```
 
 ### Community
-We encourage bug / feature requests through [discussions](https://github.com/orcasecurity/kte/discussions), as-well as general questions. Follow the [contribution guidelines](https://github.com/orcasecurity/kte/blob/master/CONTRIBUTING.md) for more information. When participating, please adhere to this project's [code of conduct](https://github.com/orcasecurity/kte/blob/master/CODE_OF_CONDUCT.md). Don't open issues as they will get immediately closed, maintainers triage discussions and then create issues.
+We encourage bug / feature requests through [discussions](https://github.com/orcasecurity/kte/discussions), as-well as general questions. Follow the [contribution guidelines](https://github.com/orcasecurity/kte/blob/main/CONTRIBUTING.md) for more information. When participating, please adhere to this project's [code of conduct](https://github.com/orcasecurity/kte/blob/main/CODE_OF_CONDUCT.md). Don't open issues as they will get immediately closed, maintainers triage discussions and then create issues.
 
 ### Disclaimer
 > :warning: This project will carry cloud costs associated with the deployment of managed Kubernetes clusters. Since the project wil be potentially customed, the cost estimation is unexpected. By default, the following machine types are being used:
@@ -62,8 +62,8 @@ We encourage bug / feature requests through [discussions](https://github.com/orc
 >
 > Please make sure to do your due-diligence to avoid unexpected costs. All vendors work in a pay-as-you-go model with a **$0.10/hour** fee for the cluster's control-plane. The hourly prices of the default machine types above, on the used regions, are: **$0.0832**, **$0.1344** and **$0.096** respectively. The current estimated price for the default EKS testing environment is **$0.266/hour** (verified on August 14 2024). The owners and maintainers of this project aren't responsible for any unexpected cost.
 
-[fork-badge]: https://img.shields.io/github/forks/orcasecurity/kte?logo=github
-[stars-badge]:  https://img.shields.io/github/stars/orcasecurity/kte?logo=github
+[fork-badge]: https://img.shields.io/github/forks/orcasecurity-research/kte?logo=github
+[stars-badge]:  https://img.shields.io/github/stars/orcasecurity-research/kte?logo=github
 [license-badge]: https://img.shields.io/badge/License-Apache%202.0-blue.svg
-[license-url]: https://github.com/orcasecurity/kte/blob/master/LICENSE
+[license-url]: https://github.com/orcasecurity-research/kte/blob/main/LICENSE
 
