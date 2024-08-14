@@ -23,7 +23,7 @@ KTE (Kubernetes Testing Environment) is a vendor-agnostic project that lets you 
 
 KTE can provision a Kubernetes cluster via Terraform on all 3 major CSPs (AWS, GCP and Azure), together with a predefined helm chart. A default test chart is provided, with plenty of misconfigurations described below.
 
-We recommend users to fork this project and add a custom chart to utilize its power on a staging environment. If you do, make sure to configure the k8s nodes' on each cluster to meet your needs in terms of resources, size and scale. You can do it by editing each cluster's IaC project [here](https://github.com/orcasecurity/kte/tree/dev/deployment/clusters). GKE and AKS support integrated node autoscaling, for an EKS support please explore [karpenter](https://github.com/aws/karpenter-provider-aws).
+We recommend users to fork this project and add a custom chart to utilize its power on a staging environment. If you do, make sure to configure the k8s nodes' on each cluster to meet your needs in terms of resources, size and scale. You can do it by editing each cluster's IaC project [here](https://github.com/orcasecurity-research/kte/tree/dev/deployment/clusters). GKE and AKS support integrated node autoscaling, for an EKS support please explore [karpenter](https://github.com/aws/karpenter-provider-aws).
 
 ## Blogpost / Write-up
 A full introduction write-up of this project, including more information on how it works and what to expect - can be found in the [Orca Research Pod]().
@@ -36,9 +36,9 @@ A full introduction write-up of this project, including more information on how 
 The clusters, helm chart and most tools are provisioned using _Terraform_. _Go_, _Kubectl_ and _yq_ are also required. You must use a **Unix** machine OR activate WSL to run the main CLI tool. We also recommend installing and using _helm_ for troubleshooting and debugging purposes.
 
 ### Configuration
-You will need to create a .tfvars for each vendor. Follow the details under [docs/configuration.md](https://github.com/orcasecurity/kte/blob/main/docs/configuration.md). 
+You will need to create a .tfvars for each vendor. Follow the details under [docs/configuration.md](https://github.com/orcasecurity-research/kte/blob/main/docs/configuration.md). 
 ```sh
-git clone https://github.com/orcasecurity/kte.git
+git clone https://github.com/orcasecurity-research/kte.git
 cd kte
 
 mkdir deployment/vars
@@ -52,7 +52,7 @@ Everything you can do is managed by the main CLI tool. Follow its help manual fo
 ```
 
 ### Community
-We encourage bug / feature requests through [discussions](https://github.com/orcasecurity/kte/discussions), as-well as general questions. Follow the [contribution guidelines](https://github.com/orcasecurity/kte/blob/main/CONTRIBUTING.md) for more information. When participating, please adhere to this project's [code of conduct](https://github.com/orcasecurity/kte/blob/main/CODE_OF_CONDUCT.md). Don't open issues as they will get immediately closed, maintainers triage discussions and then create issues.
+We encourage bug / feature requests through [discussions](https://github.com/orcasecurity-research/kte/discussions), as-well as general questions. Follow the [contribution guidelines](https://github.com/orcasecurity-research/kte/blob/main/CONTRIBUTING.md) for more information. When participating, please adhere to this project's [code of conduct](https://github.com/orcasecurity-research/kte/blob/main/CODE_OF_CONDUCT.md). Don't open issues as they will get immediately closed, maintainers triage discussions and then create issues.
 
 ### Disclaimer
 > :warning: This project will carry cloud costs associated with the deployment of managed Kubernetes clusters. Since the project wil be potentially customed, the cost estimation is unexpected. By default, the following machine types are being used:
