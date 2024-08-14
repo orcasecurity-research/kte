@@ -31,6 +31,7 @@ resource "helm_release" "prom" {
   name             = "prom"
   repository       = "https://prometheus-community.github.io/helm-charts"
   chart            = "kube-prometheus-stack"
+  version          = "60.2.0"
   namespace        = "monitoring"
   create_namespace = true
 

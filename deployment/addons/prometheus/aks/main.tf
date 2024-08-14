@@ -4,15 +4,15 @@ provider "azurerm" {
 }
 
 data "azurerm_kubernetes_cluster" "aks" {
-  name = var.cluster_name
+  name                = var.cluster_name
   resource_group_name = var.resource_group_name
 }
 
 provider "kubernetes" {
-    host                   = data.azurerm_kubernetes_cluster.aks.kube_config.0.host
-    client_certificate     = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
-    client_key             = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
-    cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+  host                   = data.azurerm_kubernetes_cluster.aks.kube_config.0.host
+  client_certificate     = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
+  client_key             = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
 }
 
 provider "helm" {
@@ -28,6 +28,7 @@ resource "helm_release" "prom" {
   name             = "prom"
   repository       = "https://prometheus-community.github.io/helm-charts"
   chart            = "kube-prometheus-stack"
+  version          = "60.2.0"
   namespace        = "monitoring"
   create_namespace = true
 
