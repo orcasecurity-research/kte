@@ -1,0 +1,2123 @@
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+
+grafana:
+  grafana.ini:
+    auth.anonymous:
+      enabled: true
+  dashboards:
+    default:
+      trivy-operator-dashboard:
+        json: |
+          {
+            "annotations": {
+              "list": [
+                {
+                  "builtIn": 1,
+                  "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                  },
+                  "enable": true,
+                  "hide": true,
+                  "iconColor": "rgba(0, 211, 255, 1)",
+                  "name": "Annotations & Alerts",
+                  "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                  },
+                  "type": "dashboard"
+                }
+              ]
+            },
+            "description": "This Dashboard is used to visualise the metrics from the security reports of the Trivy Operator",
+            "editable": true,
+            "fiscalYearStartMonth": 0,
+            "gnetId": 17813,
+            "graphTooltip": 0,
+            "id": 2,
+            "links": [],
+            "liveNow": false,
+            "panels": [
+              {
+                "collapsed": true,
+                "gridPos": {
+                  "h": 1,
+                  "w": 24,
+                  "x": 0,
+                  "y": 0
+                },
+                "id": 12,
+                "panels": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "Prometheus"
+                    },
+                    "description": "Total number by type of security issues identified in the cluster",
+                    "fieldConfig": {
+                      "defaults": {
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "red",
+                              "value": 1
+                            }
+                          ]
+                        },
+                        "unit": "none"
+                      },
+                      "overrides": [
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Critical"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "High"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "orange",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Medium"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "dark-yellow",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Low"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "green",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Unknown"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "gridPos": {
+                      "h": 9,
+                      "w": 24,
+                      "x": 0,
+                      "y": 2
+                    },
+                    "id": 21,
+                    "options": {
+                      "colorMode": "background",
+                      "graphMode": "none",
+                      "justifyMode": "center",
+                      "orientation": "auto",
+                      "reduceOptions": {
+                        "calcs": [
+                          "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                      },
+                      "showPercentChange": false,
+                      "textMode": "auto",
+                      "wideLayout": true
+                    },
+                    "pluginVersion": "11.0.0",
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities)",
+                        "instant": true,
+                        "legendFormat": "Vulnerabilities",
+                        "range": false,
+                        "refId": "A"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_resource_configaudits)",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Misconfiguration",
+                        "range": false,
+                        "refId": "B"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_exposedsecrets)",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Exposed Secrets",
+                        "range": false,
+                        "refId": "C"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_clusterrole_clusterrbacassessments)",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "RBAC Assessment",
+                        "range": false,
+                        "refId": "D"
+                      }
+                    ],
+                    "title": "Number and Type of Security Issues",
+                    "type": "stat"
+                  }
+                ],
+                "title": "Quick Overview",
+                "type": "row"
+              },
+              {
+                "collapsed": true,
+                "gridPos": {
+                  "h": 1,
+                  "w": 24,
+                  "x": 0,
+                  "y": 1
+                },
+                "id": 2,
+                "panels": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "Prometheus"
+                    },
+                    "description": "",
+                    "fieldConfig": {
+                      "defaults": {
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "red",
+                              "value": 80
+                            }
+                          ]
+                        },
+                        "unit": "none"
+                      },
+                      "overrides": [
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Critical"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "High"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "orange",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Medium"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "dark-yellow",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Low"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "green",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Unknown"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "gridPos": {
+                      "h": 9,
+                      "w": 24,
+                      "x": 0,
+                      "y": 9
+                    },
+                    "id": 19,
+                    "options": {
+                      "colorMode": "background",
+                      "graphMode": "none",
+                      "justifyMode": "center",
+                      "orientation": "auto",
+                      "reduceOptions": {
+                        "calcs": [
+                          "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                      },
+                      "showPercentChange": false,
+                      "textMode": "auto",
+                      "wideLayout": true
+                    },
+                    "pluginVersion": "11.0.0",
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Critical\"})",
+                        "instant": true,
+                        "legendFormat": "Critical",
+                        "range": false,
+                        "refId": "A"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"High\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "High",
+                        "range": false,
+                        "refId": "B"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Medium\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Medium",
+                        "range": false,
+                        "refId": "C"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Low\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Low",
+                        "range": false,
+                        "refId": "D"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Unknown\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Unknown",
+                        "range": false,
+                        "refId": "E"
+                      }
+                    ],
+                    "title": "Severity Breakdown of all Vulnerabilities",
+                    "type": "stat"
+                  },
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "Prometheus"
+                    },
+                    "description": "",
+                    "fieldConfig": {
+                      "defaults": {
+                        "color": {
+                          "mode": "palette-classic"
+                        },
+                        "custom": {
+                          "axisBorderShow": false,
+                          "axisCenteredZero": false,
+                          "axisColorMode": "text",
+                          "axisLabel": "",
+                          "axisPlacement": "auto",
+                          "barAlignment": 0,
+                          "drawStyle": "line",
+                          "fillOpacity": 0,
+                          "gradientMode": "none",
+                          "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                          },
+                          "insertNulls": false,
+                          "lineInterpolation": "linear",
+                          "lineWidth": 3,
+                          "pointSize": 5,
+                          "scaleDistribution": {
+                            "type": "linear"
+                          },
+                          "showPoints": "auto",
+                          "spanNulls": false,
+                          "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                          },
+                          "thresholdsStyle": {
+                            "mode": "off"
+                          }
+                        },
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "red",
+                              "value": 1
+                            }
+                          ]
+                        }
+                      },
+                      "overrides": []
+                    },
+                    "gridPos": {
+                      "h": 8,
+                      "w": 12,
+                      "x": 0,
+                      "y": 18
+                    },
+                    "id": 27,
+                    "options": {
+                      "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": true
+                      },
+                      "tooltip": {
+                        "maxHeight": 600,
+                        "mode": "single",
+                        "sort": "none"
+                      }
+                    },
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "expr": "sum(trivy_image_vulnerabilities) by (namespace)",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                      }
+                    ],
+                    "title": "Number of Vulnerabilities by namespace",
+                    "type": "timeseries"
+                  },
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "Prometheus"
+                    },
+                    "fieldConfig": {
+                      "defaults": {
+                        "color": {
+                          "mode": "thresholds"
+                        },
+                        "custom": {
+                          "align": "left",
+                          "cellOptions": {
+                            "type": "color-text"
+                          },
+                          "filterable": true,
+                          "inspect": false
+                        },
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "super-light-yellow",
+                              "value": 1
+                            },
+                            {
+                              "color": "orange",
+                              "value": 100
+                            },
+                            {
+                              "color": "red",
+                              "value": 500
+                            }
+                          ]
+                        }
+                      },
+                      "overrides": [
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Image"
+                          },
+                          "properties": [
+                            {
+                              "id": "custom.cellOptions",
+                              "value": {
+                                "type": "json-view"
+                              }
+                            },
+                            {
+                              "id": "custom.width",
+                              "value": 350
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "image_tag"
+                          },
+                          "properties": [
+                            {
+                              "id": "custom.cellOptions",
+                              "value": {
+                                "type": "json-view"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "gridPos": {
+                      "h": 14,
+                      "w": 24,
+                      "x": 0,
+                      "y": 26
+                    },
+                    "id": 23,
+                    "options": {
+                      "cellHeight": "sm",
+                      "footer": {
+                        "countRows": false,
+                        "enablePagination": true,
+                        "fields": "",
+                        "reducer": [
+                          "sum"
+                        ],
+                        "show": false
+                      },
+                      "frameIndex": 1,
+                      "showHeader": true,
+                      "sortBy": []
+                    },
+                    "pluginVersion": "11.0.0",
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Critical\"}) by (image_repository,image_tag)",
+                        "format": "table",
+                        "instant": true,
+                        "range": false,
+                        "refId": "A"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"High\"}) by (image_repository,image_tag)",
+                        "format": "table",
+                        "hide": false,
+                        "instant": true,
+                        "range": false,
+                        "refId": "B"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Medium\"}) by (image_repository,image_tag)",
+                        "format": "table",
+                        "hide": false,
+                        "instant": true,
+                        "range": false,
+                        "refId": "C"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Low\"}) by (image_repository,image_tag)",
+                        "format": "table",
+                        "hide": false,
+                        "instant": true,
+                        "range": false,
+                        "refId": "D"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_image_vulnerabilities{severity=\"Unknown\"}) by (image_repository,image_tag)",
+                        "format": "table",
+                        "hide": false,
+                        "instant": true,
+                        "range": false,
+                        "refId": "E"
+                      }
+                    ],
+                    "title": "Vulnerability by Image",
+                    "transformations": [
+                      {
+                        "id": "filterFieldsByName",
+                        "options": {
+                          "include": {
+                            "names": [
+                              "image_repository",
+                              "image_tag",
+                              "Value #A",
+                              "Value #B",
+                              "Value #C",
+                              "Value #D",
+                              "Value #E"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "id": "seriesToColumns",
+                        "options": {
+                          "byField": "image_repository"
+                        }
+                      },
+                      {
+                        "id": "filterFieldsByName",
+                        "options": {
+                          "include": {
+                            "names": [
+                              "image_repository",
+                              "Value #A",
+                              "Value #B",
+                              "Value #C",
+                              "Value #D",
+                              "Value #E",
+                              "image_tag 1"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "id": "organize",
+                        "options": {
+                          "excludeByName": {
+                            "image_tag": false
+                          },
+                          "indexByName": {},
+                          "renameByName": {
+                            "Value #A": "Critical",
+                            "Value #B": "High",
+                            "Value #C": "Medium",
+                            "Value #D": "Low",
+                            "Value #E": "Unknown",
+                            "image_repository": "Image",
+                            "image_tag": "Tag"
+                          }
+                        }
+                      }
+                    ],
+                    "type": "table"
+                  }
+                ],
+                "title": "Vulnerabilities",
+                "type": "row"
+              },
+              {
+                "collapsed": true,
+                "gridPos": {
+                  "h": 1,
+                  "w": 24,
+                  "x": 0,
+                  "y": 2
+                },
+                "id": 4,
+                "panels": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "Prometheus"
+                    },
+                    "description": "",
+                    "fieldConfig": {
+                      "defaults": {
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "red",
+                              "value": 80
+                            }
+                          ]
+                        },
+                        "unit": "none"
+                      },
+                      "overrides": [
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Critical"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "High"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "orange",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Medium"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "dark-yellow",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Low"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "green",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Unknown"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "gridPos": {
+                      "h": 9,
+                      "w": 24,
+                      "x": 0,
+                      "y": 10
+                    },
+                    "id": 28,
+                    "options": {
+                      "colorMode": "background",
+                      "graphMode": "none",
+                      "justifyMode": "center",
+                      "orientation": "auto",
+                      "reduceOptions": {
+                        "calcs": [
+                          "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                      },
+                      "showPercentChange": false,
+                      "textMode": "auto",
+                      "wideLayout": true
+                    },
+                    "pluginVersion": "11.0.0",
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_resource_configaudits{severity=\"Critical\"})",
+                        "instant": true,
+                        "legendFormat": "Critical",
+                        "range": false,
+                        "refId": "A"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_resource_configaudits{severity=\"High\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "High",
+                        "range": false,
+                        "refId": "B"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_resource_configaudits{severity=\"Medium\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Medium",
+                        "range": false,
+                        "refId": "C"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_resource_configaudits{severity=\"Low\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Low",
+                        "range": false,
+                        "refId": "D"
+                      }
+                    ],
+                    "title": "Severity Breakdown of all Misconfiguration",
+                    "type": "stat"
+                  }
+                ],
+                "title": "Misconfiguration",
+                "type": "row"
+              },
+              {
+                "collapsed": true,
+                "gridPos": {
+                  "h": 1,
+                  "w": 24,
+                  "x": 0,
+                  "y": 3
+                },
+                "id": 8,
+                "panels": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "Prometheus"
+                    },
+                    "description": "",
+                    "fieldConfig": {
+                      "defaults": {
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "red",
+                              "value": 80
+                            }
+                          ]
+                        },
+                        "unit": "none"
+                      },
+                      "overrides": [
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Critical"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "red",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "High"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "orange",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Medium"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "dark-yellow",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Low"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "fixedColor": "green",
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "Unknown"
+                          },
+                          "properties": [
+                            {
+                              "id": "color",
+                              "value": {
+                                "mode": "fixed"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "gridPos": {
+                      "h": 9,
+                      "w": 24,
+                      "x": 0,
+                      "y": 20
+                    },
+                    "id": 29,
+                    "options": {
+                      "colorMode": "background",
+                      "graphMode": "none",
+                      "justifyMode": "center",
+                      "orientation": "auto",
+                      "reduceOptions": {
+                        "calcs": [
+                          "lastNotNull"
+                        ],
+                        "fields": "",
+                        "values": false
+                      },
+                      "showPercentChange": false,
+                      "textMode": "auto",
+                      "wideLayout": true
+                    },
+                    "pluginVersion": "11.0.0",
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_role_rbacassessments{severity=\"Critical\"})",
+                        "instant": true,
+                        "legendFormat": "Critical",
+                        "range": false,
+                        "refId": "A"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_role_rbacassessments{severity=\"High\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "High",
+                        "range": false,
+                        "refId": "B"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_role_rbacassessments{severity=\"Medium\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Medium",
+                        "range": false,
+                        "refId": "C"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_role_rbacassessments{severity=\"Low\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Low",
+                        "range": false,
+                        "refId": "D"
+                      },
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(trivy_role_rbacassessments{severity=\"UNKNOWN\"})",
+                        "hide": false,
+                        "instant": true,
+                        "legendFormat": "Unknown",
+                        "range": false,
+                        "refId": "E"
+                      }
+                    ],
+                    "title": "Severity Breakdown of RBAC Security Issues",
+                    "type": "stat"
+                  }
+                ],
+                "title": "RBAC Assessment",
+                "type": "row"
+              },
+              {
+                "collapsed": true,
+                "gridPos": {
+                  "h": 1,
+                  "w": 24,
+                  "x": 0,
+                  "y": 4
+                },
+                "id": 6,
+                "panels": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "Prometheus"
+                    },
+                    "description": "",
+                    "fieldConfig": {
+                      "defaults": {
+                        "color": {
+                          "mode": "palette-classic"
+                        },
+                        "custom": {
+                          "axisBorderShow": false,
+                          "axisCenteredZero": false,
+                          "axisColorMode": "text",
+                          "axisLabel": "",
+                          "axisPlacement": "auto",
+                          "barAlignment": 0,
+                          "drawStyle": "line",
+                          "fillOpacity": 0,
+                          "gradientMode": "none",
+                          "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                          },
+                          "insertNulls": false,
+                          "lineInterpolation": "linear",
+                          "lineWidth": 3,
+                          "pointSize": 5,
+                          "scaleDistribution": {
+                            "type": "linear"
+                          },
+                          "showPoints": "auto",
+                          "spanNulls": false,
+                          "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                          },
+                          "thresholdsStyle": {
+                            "mode": "off"
+                          }
+                        },
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "red",
+                              "value": 1
+                            }
+                          ]
+                        }
+                      },
+                      "overrides": []
+                    },
+                    "gridPos": {
+                      "h": 8,
+                      "w": 12,
+                      "x": 0,
+                      "y": 21
+                    },
+                    "id": 30,
+                    "options": {
+                      "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": true
+                      },
+                      "tooltip": {
+                        "maxHeight": 600,
+                        "mode": "single",
+                        "sort": "none"
+                      }
+                    },
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "Prometheus"
+                        },
+                        "editorMode": "code",
+                        "expr": "sum(trivy_image_exposedsecrets) by (namespace)",
+                        "legendFormat": "__auto",
+                        "range": true,
+                        "refId": "A"
+                      }
+                    ],
+                    "title": "Exposed Secrets per namespace",
+                    "type": "timeseries"
+                  }
+                ],
+                "title": "Exposed Secrets",
+                "type": "row"
+              },
+              {
+                "collapsed": true,
+                "gridPos": {
+                  "h": 1,
+                  "w": 24,
+                  "x": 0,
+                  "y": 5
+                },
+                "id": 32,
+                "panels": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                      "defaults": {
+                        "color": {
+                          "mode": "palette-classic"
+                        },
+                        "custom": {
+                          "axisBorderShow": false,
+                          "axisCenteredZero": false,
+                          "axisColorMode": "text",
+                          "axisLabel": "",
+                          "axisPlacement": "auto",
+                          "barAlignment": 0,
+                          "drawStyle": "line",
+                          "fillOpacity": 0,
+                          "gradientMode": "none",
+                          "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                          },
+                          "insertNulls": false,
+                          "lineInterpolation": "linear",
+                          "lineWidth": 1,
+                          "pointSize": 5,
+                          "scaleDistribution": {
+                            "type": "linear"
+                          },
+                          "showPoints": "auto",
+                          "spanNulls": false,
+                          "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                          },
+                          "thresholdsStyle": {
+                            "mode": "off"
+                          }
+                        },
+                        "mappings": [],
+                        "thresholds": {
+                          "mode": "absolute",
+                          "steps": [
+                            {
+                              "color": "green",
+                              "value": null
+                            },
+                            {
+                              "color": "red",
+                              "value": 80
+                            }
+                          ]
+                        }
+                      },
+                      "overrides": [
+                        {
+                          "__systemRef": "hideSeriesFrom",
+                          "matcher": {
+                            "id": "byNames",
+                            "options": {
+                              "mode": "exclude",
+                              "names": [
+                                "CIS Kubernetes Benchmarks-status:Fail"
+                              ],
+                              "prefix": "All except:",
+                              "readOnly": true
+                            }
+                          },
+                          "properties": [
+                            {
+                              "id": "custom.hideFrom",
+                              "value": {
+                                "legend": false,
+                                "tooltip": false,
+                                "viz": true
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "gridPos": {
+                      "h": 7,
+                      "w": 24,
+                      "x": 0,
+                      "y": 6
+                    },
+                    "id": 31,
+                    "options": {
+                      "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "right",
+                        "showLegend": true
+                      },
+                      "tooltip": {
+                        "maxHeight": 600,
+                        "mode": "single",
+                        "sort": "none"
+                      }
+                    },
+                    "targets": [
+                      {
+                        "datasource": {
+                          "type": "prometheus",
+                          "uid": "prometheus"
+                        },
+                        "editorMode": "code",
+                        "expr": "trivy_cluster_compliance{status=\"Fail\"}",
+                        "instant": false,
+                        "legendFormat": "{{description}} // Status:{{status}}",
+                        "range": true,
+                        "refId": "A"
+                      }
+                    ],
+                    "title": "Failure Rate",
+                    "type": "timeseries"
+                  }
+                ],
+                "title": "Compliance",
+                "type": "row"
+              }
+            ],
+            "refresh": false,
+            "schemaVersion": 39,
+            "tags": [
+              "trivy",
+              "trivy operator",
+              "security",
+              "security scanning",
+              "vulnerabilities",
+              "exposed secrets",
+              "misconfiguration"
+            ],
+            "templating": {
+              "list": []
+            },
+            "time": {
+              "from": "now-15m",
+              "to": "now"
+            },
+            "timeRangeUpdatedDuringEditOrView": false,
+            "timepicker": {},
+            "timezone": "",
+            "title": "Trivy Operator Dashboard",
+            "uid": "ycwPj724k1",
+            "version": 1,
+            "weekStart": ""
+          }
+      kor-dashboard:
+        json: |
+          {
+            "annotations": {
+              "list": [
+                {
+                  "builtIn": 1,
+                  "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                  },
+                  "enable": true,
+                  "hide": true,
+                  "iconColor": "rgba(0, 211, 255, 1)",
+                  "name": "Annotations & Alerts",
+                  "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                  },
+                  "type": "dashboard"
+                }
+              ]
+            },
+            "description": "A Dashboard to view unused resources in Kubernetes",
+            "editable": true,
+            "fiscalYearStartMonth": 0,
+            "gnetId": 19863,
+            "graphTooltip": 0,
+            "links": [],
+            "liveNow": false,
+            "panels": [
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+                },
+                "fieldConfig": {
+                  "defaults": {
+                    "color": {
+                      "mode": "palette-classic"
+                    },
+                    "custom": {
+                      "axisBorderShow": false,
+                      "axisCenteredZero": false,
+                      "axisColorMode": "text",
+                      "axisLabel": "",
+                      "axisPlacement": "auto",
+                      "barAlignment": 0,
+                      "drawStyle": "line",
+                      "fillOpacity": 0,
+                      "gradientMode": "none",
+                      "hideFrom": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": false
+                      },
+                      "insertNulls": false,
+                      "lineInterpolation": "linear",
+                      "lineWidth": 1,
+                      "pointSize": 5,
+                      "scaleDistribution": {
+                        "type": "linear"
+                      },
+                      "showPoints": "auto",
+                      "spanNulls": false,
+                      "stacking": {
+                        "group": "A",
+                        "mode": "none"
+                      },
+                      "thresholdsStyle": {
+                        "mode": "off"
+                      }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "green",
+                          "value": null
+                        },
+                        {
+                          "color": "red",
+                          "value": 80
+                        }
+                      ]
+                    }
+                  },
+                  "overrides": []
+                },
+                "gridPos": {
+                  "h": 8,
+                  "w": 24,
+                  "x": 0,
+                  "y": 0
+                },
+                "id": 25,
+                "options": {
+                  "legend": {
+                    "calcs": [],
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "sortBy": "Name",
+                    "sortDesc": false
+                  },
+                  "tooltip": {
+                    "maxHeight": 600,
+                    "mode": "single",
+                    "sort": "none"
+                  }
+                },
+                "targets": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "PBFA97CFB590B2093"
+                    },
+                    "editorMode": "code",
+                    "expr": "kubernetes_orphaned_resources",
+                    "instant": false,
+                    "legendFormat": "namespace:{{namespace}}-kind:{{kind}}-resource:{{resourceName}}",
+                    "range": true,
+                    "refId": "A"
+                  }
+                ],
+                "title": "All Orphan Resources",
+                "type": "timeseries"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+                },
+                "fieldConfig": {
+                  "defaults": {
+                    "color": {
+                      "mode": "palette-classic"
+                    },
+                    "custom": {
+                      "axisBorderShow": false,
+                      "axisCenteredZero": false,
+                      "axisColorMode": "text",
+                      "axisLabel": "",
+                      "axisPlacement": "auto",
+                      "barAlignment": 0,
+                      "drawStyle": "line",
+                      "fillOpacity": 0,
+                      "gradientMode": "none",
+                      "hideFrom": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": false
+                      },
+                      "insertNulls": false,
+                      "lineInterpolation": "linear",
+                      "lineStyle": {
+                        "fill": "solid"
+                      },
+                      "lineWidth": 1,
+                      "pointSize": 6,
+                      "scaleDistribution": {
+                        "type": "linear"
+                      },
+                      "showPoints": "auto",
+                      "spanNulls": false,
+                      "stacking": {
+                        "group": "A",
+                        "mode": "none"
+                      },
+                      "thresholdsStyle": {
+                        "mode": "off"
+                      }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "green",
+                          "value": null
+                        },
+                        {
+                          "color": "red",
+                          "value": 80
+                        }
+                      ]
+                    }
+                  },
+                  "overrides": []
+                },
+                "gridPos": {
+                  "h": 8,
+                  "w": 24,
+                  "x": 0,
+                  "y": 8
+                },
+                "id": 18,
+                "options": {
+                  "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                  },
+                  "tooltip": {
+                    "maxHeight": 600,
+                    "mode": "single",
+                    "sort": "none"
+                  }
+                },
+                "targets": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "${datasource}"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "sum by(exported_namespace) (kubernetes_orphaned_resources{kind=~\"$kind\"})",
+                    "fullMetaSearch": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                  }
+                ],
+                "title": "Unused Resources Sum (Namespace)",
+                "type": "timeseries"
+              },
+              {
+                "collapsed": false,
+                "gridPos": {
+                  "h": 1,
+                  "w": 24,
+                  "x": 0,
+                  "y": 16
+                },
+                "id": 14,
+                "panels": [],
+                "title": "Unused Resources",
+                "type": "row"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+                },
+                "fieldConfig": {
+                  "defaults": {
+                    "color": {
+                      "mode": "palette-classic"
+                    },
+                    "custom": {
+                      "hideFrom": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": false
+                      }
+                    },
+                    "mappings": []
+                  },
+                  "overrides": []
+                },
+                "gridPos": {
+                  "h": 14,
+                  "w": 24,
+                  "x": 0,
+                  "y": 17
+                },
+                "id": 19,
+                "options": {
+                  "displayLabels": [
+                    "percent"
+                  ],
+                  "legend": {
+                    "displayMode": "list",
+                    "placement": "right",
+                    "showLegend": true,
+                    "values": []
+                  },
+                  "pieType": "donut",
+                  "reduceOptions": {
+                    "calcs": [
+                      "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": true
+                  },
+                  "tooltip": {
+                    "maxHeight": 600,
+                    "mode": "single",
+                    "sort": "none"
+                  }
+                },
+                "pluginVersion": "10.1.4",
+                "targets": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "${datasource}"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "kubernetes_orphaned_resources{exported_namespace=~\"$namespace\", kind=~\"$kind\"}",
+                    "format": "table",
+                    "fullMetaSearch": false,
+                    "includeNullMetadata": true,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A",
+                    "useBackend": false
+                  }
+                ],
+                "title": "Unused Resources Pie (Kind)",
+                "transformations": [
+                  {
+                    "id": "groupBy",
+                    "options": {
+                      "fields": {
+                        "kind": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        },
+                        "resourceName": {
+                          "aggregations": [
+                            "distinctCount"
+                          ],
+                          "operation": "aggregate"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "id": "organize",
+                    "options": {
+                      "excludeByName": {},
+                      "indexByName": {},
+                      "renameByName": {
+                        "kind": "",
+                        "resourceName (count)": "count of orphaned resources",
+                        "resourceName (distinctCount)": ""
+                      }
+                    }
+                  }
+                ],
+                "type": "piechart"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+                },
+                "fieldConfig": {
+                  "defaults": {
+                    "color": {
+                      "mode": "palette-classic"
+                    },
+                    "custom": {
+                      "axisBorderShow": false,
+                      "axisCenteredZero": false,
+                      "axisColorMode": "text",
+                      "axisGridShow": false,
+                      "axisLabel": "",
+                      "axisPlacement": "auto",
+                      "fillOpacity": 80,
+                      "gradientMode": "none",
+                      "hideFrom": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": false
+                      },
+                      "lineWidth": 1,
+                      "scaleDistribution": {
+                        "type": "linear"
+                      },
+                      "thresholdsStyle": {
+                        "mode": "off"
+                      }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "green",
+                          "value": null
+                        },
+                        {
+                          "color": "red",
+                          "value": 80
+                        }
+                      ]
+                    },
+                    "unit": "short"
+                  },
+                  "overrides": []
+                },
+                "gridPos": {
+                  "h": 14,
+                  "w": 24,
+                  "x": 0,
+                  "y": 31
+                },
+                "id": 20,
+                "options": {
+                  "barRadius": 0,
+                  "barWidth": 0.97,
+                  "fullHighlight": false,
+                  "groupWidth": 0.7,
+                  "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "right",
+                    "showLegend": true
+                  },
+                  "orientation": "auto",
+                  "showValue": "never",
+                  "stacking": "none",
+                  "tooltip": {
+                    "maxHeight": 600,
+                    "mode": "single",
+                    "sort": "none"
+                  },
+                  "xTickLabelRotation": 0,
+                  "xTickLabelSpacing": 0
+                },
+                "pluginVersion": "10.1.4",
+                "targets": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "${datasource}"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "kubernetes_orphaned_resources{exported_namespace=~\"$namespace\", kind=~\"$kind\"}",
+                    "format": "table",
+                    "fullMetaSearch": false,
+                    "includeNullMetadata": true,
+                    "instant": true,
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A",
+                    "useBackend": false
+                  }
+                ],
+                "title": "Unused Resources Bar (Kind)",
+                "transformations": [
+                  {
+                    "id": "groupBy",
+                    "options": {
+                      "fields": {
+                        "kind": {
+                          "aggregations": [],
+                          "operation": "groupby"
+                        },
+                        "resourceName": {
+                          "aggregations": [
+                            "distinctCount"
+                          ],
+                          "operation": "aggregate"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "id": "organize",
+                    "options": {
+                      "excludeByName": {},
+                      "indexByName": {},
+                      "renameByName": {
+                        "kind": "",
+                        "resourceName (count)": "count of orphaned resources",
+                        "resourceName (distinctCount)": "count of orphaned resources"
+                      }
+                    }
+                  }
+                ],
+                "type": "barchart"
+              },
+              {
+                "datasource": {
+                  "type": "prometheus",
+                  "uid": "${datasource}"
+                },
+                "description": "",
+                "fieldConfig": {
+                  "defaults": {
+                    "color": {
+                      "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "noValue": "0",
+                    "thresholds": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "green",
+                          "value": null
+                        },
+                        {
+                          "color": "red",
+                          "value": 1
+                        }
+                      ]
+                    }
+                  },
+                  "overrides": []
+                },
+                "gridPos": {
+                  "h": 8,
+                  "w": 6,
+                  "x": 0,
+                  "y": 45
+                },
+                "id": 2,
+                "options": {
+                  "colorMode": "value",
+                  "graphMode": "area",
+                  "justifyMode": "auto",
+                  "orientation": "auto",
+                  "reduceOptions": {
+                    "calcs": [
+                      "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                  },
+                  "showPercentChange": false,
+                  "textMode": "auto",
+                  "wideLayout": true
+                },
+                "pluginVersion": "11.0.0",
+                "repeat": "kind",
+                "repeatDirection": "h",
+                "targets": [
+                  {
+                    "datasource": {
+                      "type": "prometheus",
+                      "uid": "${datasource}"
+                    },
+                    "disableTextWrap": false,
+                    "editorMode": "code",
+                    "expr": "sum(kubernetes_orphaned_resources{exported_namespace=~\"$namespace\", kind=\"$kind\"})",
+                    "fullMetaSearch": false,
+                    "includeNullMetadata": true,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A",
+                    "useBackend": false
+                  }
+                ],
+                "title": "Unused $kind",
+                "type": "stat"
+              }
+            ],
+            "refresh": "",
+            "revision": 1,
+            "schemaVersion": 39,
+            "tags": [],
+            "templating": {
+              "list": [
+                {
+                  "current": {
+                    "selected": false,
+                    "text": "Prometheus",
+                    "value": "PBFA97CFB590B2093"
+                  },
+                  "hide": 0,
+                  "includeAll": false,
+                  "multi": false,
+                  "name": "datasource",
+                  "options": [],
+                  "query": "prometheus",
+                  "queryValue": "",
+                  "refresh": 1,
+                  "regex": "",
+                  "skipUrlSync": false,
+                  "type": "datasource"
+                },
+                {
+                  "allValue": "",
+                  "current": {
+                    "selected": false,
+                    "text": "All",
+                    "value": "$__all"
+                  },
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${datasource}"
+                  },
+                  "definition": "label_values(kubernetes_orphaned_resources,exported_namespace)",
+                  "hide": 0,
+                  "includeAll": true,
+                  "multi": true,
+                  "name": "namespace",
+                  "options": [],
+                  "query": {
+                    "query": "label_values(kubernetes_orphaned_resources,exported_namespace)",
+                    "refId": "StandardVariableQuery"
+                  },
+                  "refresh": 1,
+                  "regex": "",
+                  "skipUrlSync": false,
+                  "sort": 0,
+                  "type": "query"
+                },
+                {
+                  "current": {
+                    "selected": false,
+                    "text": "All",
+                    "value": "$__all"
+                  },
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${datasource}"
+                  },
+                  "definition": "label_values(kubernetes_orphaned_resources,kind)",
+                  "hide": 0,
+                  "includeAll": true,
+                  "multi": true,
+                  "name": "kind",
+                  "options": [],
+                  "query": {
+                    "query": "label_values(kubernetes_orphaned_resources,kind)",
+                    "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                  },
+                  "refresh": 1,
+                  "regex": "",
+                  "skipUrlSync": false,
+                  "sort": 0,
+                  "type": "query"
+                }
+              ]
+            },
+            "time": {
+              "from": "now-15m",
+              "to": "now"
+            },
+            "timeRangeUpdatedDuringEditOrView": false,
+            "timepicker": {},
+            "timezone": "",
+            "title": "Kor Dashboard",
+            "uid": "Zrue32P7Ik",
+            "version": 1,
+            "weekStart": ""
+          }

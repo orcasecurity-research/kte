@@ -1,0 +1,18 @@
+kubesec: true
+kube-score: true
+polaris:
+  eks: true
+  gke: false
+  aks: false
+kor:
+  eks: true
+  gke: false
+  aks: false
+trivy-operator:
+  eks: true
+  gke: false
+  aks: false
+checkov:
+  eks: true
+  gke: false
+  aks: false

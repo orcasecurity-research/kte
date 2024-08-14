@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: impersonator-binding
+subjects:
+- kind: ServiceAccount
+  name: impersonator
+  namespace: sales
+roleRef:
+  kind: ClusterRole
+  name: impersonator-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-admin-sa
+subjects:
+  - kind: ServiceAccount
+    name: cluster-admin-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io

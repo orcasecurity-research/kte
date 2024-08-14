@@ -1,0 +1,88 @@
+cronJob:
+  enabled: false
+  name: kor
+  schedule: "0 1 * * 1"
+  image:
+    repository: yonahdissen/kor
+    tag: latest
+  # e.g. kor configmap --include-namespaces default,other-ns
+  command:
+    - kor
+  args:
+    - all
+  slackWebhookUrl: ""
+  slackChannel: ""
+  slackAuthToken: ""
+  restartPolicy: OnFailure
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+
+prometheusExporter:
+  enabled: true
+  name: kor-exporter
+  # time in minutes, default is 10 minutes
+  exporterInterval: ""
+  command:
+    - kor
+  args:
+    - exporter
+  deployment:
+    image:
+      repository: yonahdissen/kor
+      tag: latest
+    restartPolicy: Always
+    imagePullPolicy: Always
+    imagePullSecrets: []
+    podSecurityContext: {}
+    replicaCount: 1
+    resources: {}
+      # limits:
+      #   cpu: 100m
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+    securityContext: {}
+      # capabilities:
+      #   drop:
+      #   - ALL
+      # readOnlyRootFilesystem: true
+      # runAsNonRoot: true
+      # runAsUser: 1000
+
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  serviceMonitor:
+    enabled: true
+    # -- Set the namespace the ServiceMonitor should be deployed, if empty namespace will be `.Release.Namespace`
+    namespace: ""
+    # -- Service monitor labels
+    labels: {}
+    # -- Set how frequently Prometheus should scrape
+    interval: 30s
+    telemetryPath: /metrics
+    # -- Set timeout for scrape
+    timeout: 10s
+    relabelings: []
+    # -- Set of labels to transfer on the Kubernetes Service onto the target.
+    targetLabels: []
+    metricRelabelings: []
+
+# -- Custom labels to add into metadata
+additionalLabels: {}
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # -- If not set and create is true, a name is generated using the fullname template
+  name: ""

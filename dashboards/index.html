@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tools Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f5fa;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .dashboard-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            width: 90%;
+            max-width: 1200px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 20px;
+        }
+        .logo-space {
+            width: 65px;
+            height: 65px;
+            margin-right: 20px;
+            border-radius: 50%;
+        }
+        h1 {
+            color: #24292e;
+            margin: 0;
+            font-size: 28px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #0366d6;
+            font-size: 16px;
+        }
+        a[href="#"] {
+            color: inherit;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 25px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        th {
+            background-color: #f6f8fa;
+            font-weight: 600;
+            color: #24292e;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .stars {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <div class="logo-space">
+                <img src="../docs/images/logo.svg" alt="logo">
+            </div>
+            <h1>Tools Dashboard</h1>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>OSS</th>
+                    <th>Results</th>
+                    <th>Stars</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>polaris</td>
+                    <td><a href="https://github.com/FairwindsOps/polaris" target="_blank">GitHub</a></td>
+                    <td>
+                        <a class="polaris" href="#" target="_blank">eks </a>/
+                        <a class="polaris" href="#" target="_blank">gke </a>/
+                        <a class="polaris" href="#" target="_blank">aks </a>
+                    </td>
+                    <td class="stars">
+                        <img alt="stars" src="https://img.shields.io/github/stars/FairwindsOps/polaris?logo=github">
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>kor</td>
+                    <td><a href="https://github.com/yonahd/kor" target="_blank">GitHub</a></td>
+                    <td>
+                        <a class="kor" href="#">eks </a>/
+                        <a class="kor" href="#" target="_blank">gke </a>/
+                        <a class="kor" href="#" target="_blank">aks </a>
+                    </td>
+                    <td class="stars">
+                        <img alt="stars" src="https://img.shields.io/github/stars/yonahd/kor?logo=github">
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>trivy-operator</td>
+                    <td><a href="https://github.com/aquasecurity/trivy-operator" target="_blank">GitHub</a></td>
+                    <td>
+                        <a class="trivy-operator" href="#" target="_blank">eks </a>/
+                        <a class="trivy-operator" href="#" target="_blank">gke </a>/
+                        <a class="trivy-operator" href="#" target="_blank">aks </a>
+                    </td>
+                    <td class="stars">
+                        <img alt="stars" src="https://img.shields.io/github/stars/aquasecurity/trivy-operator?logo=github">
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>kubesec</td>
+                    <td><a href="https://github.com/controlplaneio/kubesec" target="_blank">GitHub</a></td>
+                    <td>
+                        <a class="kubesec" href="#" target="_blank">kubesec</a>
+                    </td>
+                    <td class="stars">
+                        <img alt="stars" src="https://img.shields.io/github/stars/controlplaneio/kubesec?logo=github">
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>checkov</td>
+                    <td><a href="https://github.com/bridgecrewio/checkov/tree/main/kubernetes" target="_blank">GitHub</a></td>
+                    <td>
+                        <a class="checkov" href="#" target="_blank">eks </a>/
+                        <a class="checkov" href="#" target="_blank">gke </a>/
+                        <a class="checkov" href="#" target="_blank">aks </a>
+                    </td>
+                    <td class="stars">
+                        <img alt="stars" src="https://img.shields.io/github/stars/bridgecrewio/checkov?logo=github">
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>kube-score</td>
+                    <td><a href="https://github.com/zegl/kube-score" target="_blank">GitHub</a></td>
+                    <td>
+                        <a class="kube-score" href="#" target="_blank">kube-score</a>
+                    </td>
+                    <td class="stars">
+                        <img alt="stars" src="https://img.shields.io/github/stars/zegl/kube-score?logo=github">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

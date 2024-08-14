@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: connection-string
+  namespace: rnd
+data:
+  connectionString: "Server=myServerAddress;Database=myDatabase;User Id=myUsername;Password=myPassword;"

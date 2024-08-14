@@ -1,0 +1,4 @@
+serviceMonitor:
+  enabled: true
+trivy:
+  ignoreUnfixed: true

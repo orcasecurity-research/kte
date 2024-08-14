@@ -1,0 +1,21 @@
+{{- if .Values.prometheusExporter.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.prometheusExporter.name }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "8080"
+  labels:
+    {{- include "kor.labels" . | nindent 4 }}
+    app: {{ .Values.prometheusExporter.name }}
+spec:
+  type: {{ .Values.prometheusExporter.service.type }}
+  selector:
+    app: {{ .Values.prometheusExporter.name }}
+  ports:
+    - name: metrics
+      port: {{ .Values.prometheusExporter.service.port }}
+      targetPort: http
+{{- end }}

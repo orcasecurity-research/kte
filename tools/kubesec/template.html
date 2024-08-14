@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read JSON File</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: auto;
+            color: #333; /* Text color */
+            font-size: 14px; /* Font size */
+            line-height: 1.5; /* Line height */
+            border-radius: 5px;
+            white-space: pre-wrap; /* Preserve whitespace and allow wrapping */
+            word-wrap: break-word; /* Wrap long words */
+        }
+        .string { color: green; }
+        .number { color: darkorange; }
+        .boolean { color: blue; }
+        .null { color: magenta; }
+        .key { color: brown; }
+    </style>
+</head>
+<body>
+    <pre id="json"></pre>
+
+    <script>
+        // Example JSON data embedded directly in the HTML file
+        const jsonData = {};
+
+        // Convert JSON data to a pretty-printed string
+        const prettyJson = JSON.stringify(jsonData, null, 2);
+
+        // Display the formatted JSON in the <pre> tag
+        document.getElementById('json').innerHTML = syntaxHighlight(prettyJson);
+
+        // Function to syntax highlight JSON
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+</body>
+</html>

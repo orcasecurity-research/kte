@@ -1,0 +1,18 @@
+title: "<org name>:"
+labels: ["adopters"]
+body:
+  - type: textarea
+    attributes:
+      label: "How do you use KTE?"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "What's your favorite part of KTE?"
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        ## Get in touch
+        We are always looking to chat, listen to more feedback and collaborate with other organizations / individuals. If any of this interests you or your marketing team, please reach out at: x@orca.security.

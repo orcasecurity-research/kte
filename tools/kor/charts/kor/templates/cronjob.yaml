@@ -1,0 +1,59 @@
+{{- if .Values.cronJob.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "kor.labels" . | nindent 4 }}
+    app: {{ .Release.Name }}
+spec:
+  schedule: {{ .Values.cronJob.schedule }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "kor.labels" . | nindent 12 }}
+          name: {{ .Release.Name }}
+        spec:
+          serviceAccountName: {{ include "kor.serviceAccountName" . }}
+          containers:
+            - name: {{ .Release.Name }}-container
+              image: {{ .Values.cronJob.image.repository }}:{{ .Values.cronJob.image.tag }}
+              command:
+                {{- toYaml .Values.cronJob.command | nindent 16 }}
+              args:
+                {{- toYaml .Values.cronJob.args | nindent 16 }}
+              {{- if .Values.cronJob.slackWebhookUrl }}
+                - '--slack-webhook-url'
+                - "${SLACK_WEBHOOK_URL}"
+              env:
+                - name: SLACK_WEBHOOK_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Release.Name }}-slack-webhook-url-secret
+                      key: slack-webhook-url
+              {{- else if and .Values.cronJob.slackChannel .Values.cronJob.slackAuthToken }}
+                - '--slack-channel'
+                - {{ .Values.cronJob.slackChannel | quote }}
+                - '--slack-auth-token'
+                - "${SLACK_AUTH_TOKEN}"
+              env:
+                - name: SLACK_AUTH_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Release.Name }}-slack-auth-token-secret
+                      key: slack-auth-token
+              {{- end }}
+              {{- if .Values.cronJob.env }}
+              env:
+                {{- toYaml .Values.cronJob.env | nindent 12 }}
+              {{- end }}
+          restartPolicy: {{ .Values.cronJob.restartPolicy }}
+  {{- if .Values.cronJob.successfulJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.cronJob.successfulJobsHistoryLimit }}
+  {{- end }}
+  {{- if .Values.cronJob.failedJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.cronJob.failedJobsHistoryLimit }}
+  {{- end }}
+{{- end }}
