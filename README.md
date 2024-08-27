@@ -62,8 +62,8 @@ We encourage bug / feature requests through [discussions](https://github.com/orc
 >
 > Please make sure to do your due-diligence to avoid unexpected costs. All vendors work in a pay-as-you-go model with a **$0.10/hour** fee for the cluster's control-plane. The hourly prices of the default machine types above, on the used regions, are: **$0.0832**, **$0.1344** and **$0.096** respectively. The current estimated price for the default EKS testing environment is **$0.266/hour** (verified on August 14 2024). The owners and maintainers of this project aren't responsible for any unexpected cost.
 
-[fork-badge]: https://img.shields.io/github/forks/orcasecurity-research/kte?logo=github
-[stars-badge]:  https://img.shields.io/github/stars/orcasecurity-research/kte?logo=github
+[fork-badge]: https://img.shields.io/github/forks/orcasecurity-research/kte?style=flat
+[stars-badge]:  https://img.shields.io/github/stars/orcasecurity-research/kte?style=flat
 [license-badge]: https://img.shields.io/badge/License-Apache%202.0-blue.svg
 [license-url]: https://github.com/orcasecurity-research/kte/blob/main/LICENSE
 
