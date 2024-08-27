@@ -26,7 +26,7 @@ KTE can provision a Kubernetes cluster via Terraform on all 3 major CSPs (AWS, G
 We recommend users to fork this project and add a custom chart to utilize its power on a staging environment. If you do, make sure to configure the k8s nodes' on each cluster to meet your needs in terms of resources, size and scale. You can do it by editing each cluster's IaC project [here](https://github.com/orcasecurity-research/kte/tree/dev/deployment/clusters). GKE and AKS support integrated node autoscaling, for an EKS support please explore [karpenter](https://github.com/aws/karpenter-provider-aws).
 
 ## Blogpost / Write-up
-A full introduction write-up of this project, including more information on how it works and what to expect - can be found in the [Orca Research Pod]().
+A full introduction write-up of this project, including more information on how it works and what to expect - can be found in the [Orca Research Pod](https://orca.security/resources/blog/kubernetes-testing-environment/).
 
 ## Default Helm
 <img id="designImg" alt="Cluster Design" src="docs/images/miro-helm-chart.jpg"/>
