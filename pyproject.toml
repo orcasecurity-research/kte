@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "kte"
+version = "0.1.0"
+description = ""
+authors = ["roin-orca <roi.nisimi@orca.security>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiohttp = "^3.10.5"
+asyncio = "^3.4.3"
+aiohttp-socks = "^0.9.0"
+beautifulsoup4 = "^4.12.3"
+openai = "^1.42.0"
+python-dotenv = "^1.0.1"
+faiss-cpu = "^1.8.0.post1"
+sentence-transformers = "^3.0.1"
+ipython = "^8.26.0"
+flask = "^3.0.3"
+flask-socketio = "^5.3.6"
+
+
+[tool.poetry.group.dev.dependencies]
+ipdb = "^0.13.13"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

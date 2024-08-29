@@ -51,3 +51,10 @@ tools/kube-score/kube-score
 # Ignore ssh keys
 id_rsa
 id_rsa.pub
+
+# Ignore rag json documents
+ai/rag/loaders/jsons/*
+ai/rag/vectors/*
+
+# Ignore python cache files
+*.pyc
