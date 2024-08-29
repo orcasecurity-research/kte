@@ -4,6 +4,7 @@ import sys
 import pickle
 import faiss
 import warnings
+from aiohttp_socks import ProxyConnectionError
 from ai.rag.retrieve import search_similar
 from ai.rag.store import pre_embedding, json_to_text, store_embeddings
 from ai.rag.load import load_documents
@@ -24,7 +25,11 @@ async def main():
         os.makedirs(VECTOR_PATH, exist_ok=True)
         os.makedirs(JSON_DOCUMENTS_PATH, exist_ok=True)
 
-        await load_documents(JSON_DOCUMENTS_PATH, sys.argv[2])
+        try:
+            await load_documents(JSON_DOCUMENTS_PATH, sys.argv[2])
+        except ProxyConnectionError:
+            print("failed to connect to socks proxy. run ./kte.sh tunnel <vendor>.")
+            exit(1)
 
         findings = list(map(lambda finding: json_to_text(finding), await pre_embedding(JSON_DOCUMENTS_PATH)))
         with open(f'{VECTOR_PATH}/findings.pkl', 'wb') as f:
