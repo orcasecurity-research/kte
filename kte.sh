@@ -9,6 +9,7 @@ function display_help {
     echo "  state                  Execute the state script"
     echo "  destroy [OPTIONS]      Execute the destroy script with options"
     echo "  tunnel [OPTIONS]       Execute the tunnel script with options"
+    echo "  ai [OPTIONS]           Execute the ai script with options"
     echo
     echo "Options:"
     echo "  -h, --help    Display this help manual and exit."
@@ -41,6 +42,19 @@ function display_tunnel_help {
     echo ""
     echo "Examples:"
     echo "  ./kte.sh tunnel eks"
+}
+
+function display_ai_help {
+    echo "Usage: ./kte.sh ai [options]"
+    echo ""
+    echo "Options:"
+    echo "  setup <vendor>  setup AI and RAG infrastructure for a specific vendor."
+    echo "  prompt          start a prompt and ask questions about your k8s findings."
+    echo "  -h, --help    Display this help manual and exit."
+    echo ""
+    echo "Examples:"
+    echo "  ./kte.sh ai setup eks"
+    echo "  ./kte.sh ai prompt"
 }
 
 if [ $# -eq 0 ]; then
@@ -130,6 +144,42 @@ case "$1" in
         * )
           echo "Invalid option: $1"
           display_tunnel_help
+          exit 1
+          ;;
+      esac
+      ;;
+    ai )
+      shift
+      case "$1" in
+        setup )
+          shift
+          case "$1" in
+            eks )
+              export PYTHONPATH=$PWD; poetry run python ai/main.py setup eks
+              ;;
+            gke )
+              export PYTHONPATH=$PWD; poetry run python ai/main.py setup gke
+              ;;
+            aks )
+              export PYTHONPATH=$PWD; poetry run python ai/main.py setup aks
+              ;;
+            * )
+              echo "Invalid option: $1"
+              display_ai_help
+              exit 1
+              ;;
+          esac
+          ;;
+        prompt )
+          export PYTHONPATH=$PWD; poetry run python ai/main.py prompt
+          ;;
+        -h | --help )
+          display_ai_help
+          exit 0
+          ;;
+        * )
+          echo "Invalid option: $1"
+          display_ai_help
           exit 1
           ;;
       esac
